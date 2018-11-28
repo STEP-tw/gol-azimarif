@@ -23,7 +23,7 @@ describe('nextGeneration',() => {
     assert.ok(isSameArity(actualNextGen,expectedNextGen));
   });
 
-  it.skip('should kill cells not within bounds',() => {
+  it('should kill cells not within bounds',() => {
     let currentGeneration = [[0,1],[0,2],[0,3]];
     let expectedNextGen = []
     let bounds = {topLeft: [1,1], bottomRight: [3,3]};
