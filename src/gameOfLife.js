@@ -14,35 +14,31 @@ const isPositionExists = function(currentAliveCell){
 const getAliveCells = function(bounds){
   let { topLeft, bottomRight } = bounds;
   let newGeneration = [];
-  let rowIndex = generateIndex(topLeft[0], bottomRight[0]);
-  let columnIndex = generateIndex(topLeft[1], bottomRight[1]);
+  let {length, width} = world.getWorldSize(world.grid);
 
-  rowIndex.map((row)=>
-    columnIndex.map((col)=> {
-      world.grid[row][col] == 1 && newGeneration.push([row,col]);
-    })
-  );
+  for(let row=0; row<width; row++){
+    for(let column=0; column<length; column++){
+      world.grid[row][column]==1 && newGeneration.push([row, column]);
+    }
+  }
   return newGeneration;
-}
-
-const generateIndex = function(startIndex, endIndex){
-  let size = endIndex - startIndex + 1;
-  let index = startIndex;
-  return new Array(size).fill(0).map((element)=> index++ );
 }
 
 const nextGeneration = function(currGeneration,bounds) {
   let  {topLeft,  bottomRight } = bounds; 
-  let length = bottomRight[0]+1;
-  let width = bottomRight[1] +1;
+  let length = bottomRight[0] - topLeft[0] +1;
+  let width = bottomRight[1] - topLeft[1] +1;
   world.grid = world.generateGrid({length, width});
+
+  currGeneration =  currGeneration.map((x)=> [x[0]- topLeft[0], x[1]- topLeft[1]]);
   currGeneration = currGeneration.filter((position)=> {
     return isPositionExists({rowPosition: position[0], columnPosition: position[1], topLeft, bottomRight})
   });
   currGeneration.forEach((aliveCell)=> { world.initializeGrid( { latitude:aliveCell[0], longitude:aliveCell[1] })});
   world.updateGrid();
-
-  return getAliveCells(bounds);
+  let aliveCells= getAliveCells(bounds);
+  aliveCells=  aliveCells.map((cell)=> [cell[0]+ topLeft[0], cell[1]+ topLeft[1]]);
+  return aliveCells;
 }
 
 module.exports = { nextGeneration };
