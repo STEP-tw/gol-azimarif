@@ -1,4 +1,7 @@
-const { sum } = require('./util.js');
+const { 
+  sum,
+  parseBoolToInt
+} = require('./util.js');
 
 const world = {
   grid :[],
@@ -47,7 +50,7 @@ const world = {
 
   getAliveNeighbours : function(position) {
     let { latitude, longitude } = position;
-    return this.getAllNeighbours(position).map((x)=> this.isNeighbourAlive({ latitude:x[0], longitude:x[1]})).map((x)=> 0+x);
+    return this.getAllNeighbours(position).map((x)=> this.isNeighbourAlive({ latitude:x[0], longitude:x[1]})).map(parseBoolToInt);
   },
 
   getAliveNeighboursCount : function(position) {
