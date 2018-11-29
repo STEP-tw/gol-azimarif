@@ -1,3 +1,5 @@
+const { sum } = require('./util.js');
+
 const world = {
   grid :[],
 
@@ -49,7 +51,7 @@ const world = {
   },
 
   getAliveNeighboursCount : function(position) {
-    return this.getAliveNeighbours(position).reduce((x,y)=> x+y);
+    return this.getAliveNeighbours(position).reduce(sum);
   },
 
   updatePositionState : function(positionDetail){
