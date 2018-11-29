@@ -1,5 +1,5 @@
 const assert = require('assert');
-const {nextGeneration} = require('../src/gameOfLife.js');
+const {nextGeneration} = require('../src/gameOfLifeLibrary.js');
 
 const contains = (list,element) => list.some(e=>e[0]===element[0] && e[1]===element[1]);
 const isSame = (actualList,expectedList) => actualList.every(contains.bind(null,expectedList));
