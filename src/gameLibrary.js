@@ -1,25 +1,27 @@
 const world = {
   grid :[],
 
-  generateGrid : function(size){
-    let gridCells = new Array(size).fill(0);
-    let grid = gridCells.map((x)=> new Array(size).fill(0));
+  generateGrid : function(dimension){
+    let {length, width} = dimension;
+    let gridRows = new Array(length).fill(0);
+    let grid = gridRows.map((element)=> new Array(width).fill(0));
     return grid;
   },
 
-  generateGridPosition : function(size){
-    this.grid = this.generateGrid(size);
+  generateGridPosition : function(dimension){
+    this.grid = this.generateGrid(dimension);
     let position=1;
     return this.grid = this.grid.map((x)=> x.map((y) => position++));
   },
 
   getWorldSize : function(grid){
-    return grid.length;
+    return {length: grid.length, width : grid[0].length };
   },
 
   isNeighbourValid : function(position) {
     let { latitude, longitude } = position;
-    return !( Math.min(latitude,longitude) < 0 || Math.max(latitude,longitude) >= this.getWorldSize(this.grid));
+    let {length, width} = this.getWorldSize(this.grid);
+    return !( Math.min(latitude,longitude) < 0 || latitude >= length ||longitude >= width);
   },
 
   isNeighbourAlive : function(position) {
@@ -63,9 +65,9 @@ const world = {
 
   updateGrid : function(){
     let newGrid = this.grid.map((x)=> x.slice());
-    let worldSize = this.getWorldSize(this.grid);
-    for(let latitude=0; latitude<worldSize; latitude++){
-      for(let longitude=0;longitude<worldSize; longitude++){
+    let {length, width} = this.getWorldSize(this.grid);
+    for(let latitude=0; latitude<length; latitude++){
+      for(let longitude=0;longitude<width; longitude++){
         let aliveNeighbours = this.getAliveNeighboursCount({latitude, longitude});
         let newState = this.updatePositionState({latitude, longitude, aliveNeighbours});
         newGrid[latitude][longitude] = newState;

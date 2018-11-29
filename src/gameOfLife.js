@@ -33,9 +33,9 @@ const generateIndex = function(startIndex, endIndex){
 
 const nextGeneration = function(currGeneration,bounds) {
   let  {topLeft,  bottomRight } = bounds; 
-  let size = Math.max.apply(null,bottomRight) + 1;
-  world.grid = world.generateGrid(size);
-
+  let length = bottomRight[0]+1;
+  let width = bottomRight[1] +1;
+  world.grid = world.generateGrid({length, width});
   currGeneration = currGeneration.filter((position)=> {
     return isPositionExists({rowPosition: position[0], columnPosition: position[1], topLeft, bottomRight})
   });
