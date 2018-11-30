@@ -23,15 +23,15 @@ const world = {
     return {length: grid.length, width : grid[0].length };
   },
 
-  isNeighbourValid : function(position) {
+  isCellPositionValid : function(position) {
     let { latitude, longitude } = position;
     let {length, width} = this.getGridDimension(this.grid);
     return !( Math.min(latitude,longitude) < 0 || latitude >= length ||longitude >= width);
   },
 
-  isNeighbourAlive : function(position) {
+  isCellStateAlive : function(position) {
     let { latitude, longitude } = position;
-    return (this.isNeighbourValid(position)) &&  (this.grid[latitude][longitude] == 1);
+    return (this.isCellPositionValid(position)) &&  (this.grid[latitude][longitude] == 1);
   },
 
   getAllNeighbours : function(position){
@@ -50,7 +50,7 @@ const world = {
 
   getAliveNeighbours : function(position) {
     let { latitude, longitude } = position;
-    return this.getAllNeighbours(position).map((x)=> this.isNeighbourAlive({ latitude:x[0], longitude:x[1]})).map(parseBoolToInt);
+    return this.getAllNeighbours(position).map((x)=> this.isCellStateAlive({ latitude:x[0], longitude:x[1]})).map(parseBoolToInt);
   },
 
   getAliveNeighboursCount : function(position) {
