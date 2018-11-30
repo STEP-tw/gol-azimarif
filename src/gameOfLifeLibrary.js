@@ -11,7 +11,7 @@ const isPositionExists = function(currentAliveCell){
 const getAliveCells = function(bounds){
   let { topLeft, bottomRight } = bounds;
   let newGeneration = [];
-  let {length, width} = world.getWorldSize(world.grid);
+  let {length, width} = world.getGridDimension(world.grid);
   for(let row=0; row<length; row++){
     for(let column=0; column<width; column++){
       world.grid[row][column]==1 && newGeneration.push([row, column]);

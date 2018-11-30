@@ -19,13 +19,13 @@ const world = {
     return this.grid = this.grid.map((x)=> x.map((y) => position++));
   },
 
-  getWorldSize : function(grid){
+  getGridDimension : function(grid){
     return {length: grid.length, width : grid[0].length };
   },
 
   isNeighbourValid : function(position) {
     let { latitude, longitude } = position;
-    let {length, width} = this.getWorldSize(this.grid);
+    let {length, width} = this.getGridDimension(this.grid);
     return !( Math.min(latitude,longitude) < 0 || latitude >= length ||longitude >= width);
   },
 
@@ -70,7 +70,7 @@ const world = {
 
   updateGrid : function(){
     let newGrid = this.grid.map((x)=> x.slice());
-    let {length, width} = this.getWorldSize(this.grid);
+    let {length, width} = this.getGridDimension(this.grid);
     for(let latitude=0; latitude<length; latitude++){
       for(let longitude=0;longitude<width; longitude++){
         let aliveNeighbours = this.getAliveNeighboursCount({latitude, longitude});
