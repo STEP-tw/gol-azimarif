@@ -13,7 +13,7 @@ const world = {
     return grid;
   },
 
-  generateGridPosition : function(dimension){
+  generateLabelledGrid : function(dimension){
     this.grid = this.generateGrid(dimension);
     let position=1;
     return this.grid = this.grid.map((x)=> x.map((y) => position++));
