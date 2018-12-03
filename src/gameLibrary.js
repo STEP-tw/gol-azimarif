@@ -1,15 +1,16 @@
 const { 
   sum,
-  parseBoolToInt
+  parseBoolToInt,
+  repeatCharacter
 } = require('./util.js');
 
 const world = {
   grid :[],
 
   generateGrid : function(dimension){
-    let {length, width} = dimension;
+    let {length, breadth} = dimension;
     let gridRows = new Array(length).fill(0);
-    let grid = gridRows.map((element)=> new Array(width).fill(0));
+    let grid = gridRows.map((element)=> new Array(breadth).fill(0));
     return grid;
   },
 
@@ -92,6 +93,25 @@ const world = {
       numberOfIteration--;
     }
     return this.grid;
+  },
+  
+  calculateLongestElementLength : function(list) {
+  let { length, breadth } =  this.getGridDimension(world.grid);
+  return (length*breadth).toString().length;
+  },
+
+  createPrintableBoard : function(grid){
+  let longestLength = this.calculateLongestElementLength(grid);
+  let printableBoard= grid.map((row)=>row.map((col)=>{
+    let lengthDifference = longestLength - col.toString().length;
+    let prefixString = new Array(lengthDifference).fill(' ').join('');
+    return prefixString + col;
+  }));
+  printableBoard = printableBoard.map((row) => '|' + row.join('|')+ '|');
+  let borderLength = printableBoard[0].length;
+  let border = repeatCharacter(borderLength, "-");
+  printableBoard = border + "\n" + printableBoard.join("\n" + border + "\n")+ "\n" + border;
+  return printableBoard;
   }
 }
 
